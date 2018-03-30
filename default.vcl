@@ -12,6 +12,16 @@ backend default {
   .port = "80";
 }
 
+backend dex {
+    .host = "content-auth-dex";
+    .port = "8080";
+}
+
+backend dex_redirect {
+    .host = "content-auth-dex-redirect";
+    .port = "8080";
+}
+
 acl purge {
     "localhost";
 }
@@ -47,6 +57,17 @@ sub vcl_recv {
 
     if (req.url ~ "^\/robots\.txt$") {
         return(synth(200, "robots"));
+    }
+
+    //  allow dex & dex-redirect access without requiring auth
+    if (req.http.Host ~ "^.*-dex\.ft\.com$") {
+        set req.backend_hint = dex;
+        return (pass);
+    }
+
+    if (req.http.Host ~ "^.*-dex-redirect\.ft\.com$") {
+        set req.backend_hint = dex_redirect;
+        return (pass);
     }
 
     if ((req.url ~ "^\/__health.*$") || (req.url ~ "^\/__gtg.*$")) { 
