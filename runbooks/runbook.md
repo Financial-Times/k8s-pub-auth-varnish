@@ -99,8 +99,6 @@ None
 
 - https://upp-prod-publish-us.upp.ft.com/__health
 - https://upp-prod-publish-eu.upp.ft.com/__health
-- https://upp-prod-delivery-us.upp.ft.com/__health
-- https://upp-prod-delivery-eu.upp.ft.com/__health
 
 ## First Line Troubleshooting
 
