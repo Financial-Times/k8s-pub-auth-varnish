@@ -93,7 +93,7 @@ None
 
 ## Key Management Details
 
-None
+There are no keys for rotation.
 
 ## Monitoring
 
