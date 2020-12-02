@@ -13,6 +13,9 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-prefix: "{{ .Values.s3.prefix }}"
     service.beta.kubernetes.io/aws-load-balancer-access-log-emit-interval: "{{ .Values.s3.interval }}"
     {{- end }}
+    external-dns: enabled
+    external-dns.alpha.kubernetes.io/hostname: "{{.Values.service.external_dns_hostname}}"
+    external-dns.alpha.kubernetes.io/ttl: "30"
 
   labels:
     chart: "{{ .Chart.Name | trunc 63 }}"
