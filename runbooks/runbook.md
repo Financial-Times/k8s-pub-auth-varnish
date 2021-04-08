@@ -22,10 +22,6 @@ Production
 
 content
 
-## Supported By
-
-content
-
 ## Known About By
 
 - mihail.mihaylov
