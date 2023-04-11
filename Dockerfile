@@ -1,31 +1,23 @@
-FROM alpine:3.9
+FROM alpine:3.17
 
-ENV VARNISHSRC=/usr/include/varnish VMODDIR=/usr/lib/varnish/vmods
+RUN apk --update add varnish varnish-dev git automake autoconf libtool python3 make py-docutils curl jq 
 
-COPY vmod-basicauth-1.9/ /vmod-basicauth
-
-RUN apk --update add varnish varnish-dev git automake autoconf libtool python3 make py-docutils curl jq && ln -s /usr/bin/python3 /usr/bin/python && \
-  cd / && echo "-------basicauth-build-------" && \
-  git clone https://github.com/varnish/varnish-modules.git && \
-  mkdir /aclocal && \
-  cd varnish-modules && \
-  git checkout  f771780801b5cf8b77954226a4f623fac759cd1e && \
-  autoreconf -f -i && \
-  ./bootstrap && \
-  ./configure && \
-  make  && \
-  make install && \
-  cd /vmod-basicauth && \
-  autoreconf -f -i && \
-  mkdir -p /usr/include/varnish/bin/varnishtest/ && \
-  ln -s /usr/bin/varnishtest /usr/include/varnish/bin/varnishtest/varnishtest && \
-  mkdir -p /usr/include/varnish/lib/libvcc/ && \
-  ln -s /usr/share/varnish/vmodtool.py /usr/include/varnish/lib/libvcc/vmodtool.py && \
-  ./configure && \
-  make && \
-  make install && \
-  apk del git automake autoconf libtool python3 make py-docutils && \
-  rm -rf /var/cache/apk/* /vmod-basicauth
+WORKDIR /
+RUN  git clone -b 7.0 https://github.com/varnish/varnish-modules.git 
+RUN cd /varnish-modules && \
+    ./bootstrap && \
+    ./configure && \
+    make && \
+    make check -j 4 && \
+    make install
+RUN  git clone -b v2.0 git://git.gnu.org.ua/vmod-basicauth.git
+RUN cd /vmod-basicauth && \
+    ./bootstrap && \
+    ./configure && \
+    make && \
+    make install 
+RUN  apk del git automake autoconf libtool python3 make py-docutils 
+RUN  rm -rf /var/cache/apk/* /vmod-basicauth /varnish-modules
 
 COPY default.vcl /etc/varnish/default.vcl
 COPY start.sh /start.sh
