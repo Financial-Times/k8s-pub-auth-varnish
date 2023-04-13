@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM ubuntu:jammy
 
 ENV VARNISHSRC=/usr/include/varnish VMODDIR=/usr/lib/varnish/vmods
 
@@ -7,14 +7,14 @@ WORKDIR /
 RUN apt-get update && \
     apt-get install -y curl gnupg2
 
-# install varnish 6.0-lts
+# install varnish 6.0-lts dependencies
 RUN curl -L https://packagecloud.io/varnishcache/varnish60lts/gpgkey | apt-key add - && \
-    echo "deb https://packagecloud.io/varnishcache/varnish60lts/ubuntu/ bionic main" | tee /etc/apt/sources.list.d/varnish-cache.list && \
+    echo "deb https://packagecloud.io/varnishcache/varnish60lts/ubuntu/ jammy main" | tee /etc/apt/sources.list.d/varnish-cache.list && \
     apt-get update && \
-    apt-get install -y libgetdns-dev varnish=6.0.11-1~bionic varnish-dev=6.0.11-1~bionic
+    apt-get install -y libgetdns-dev varnish=6.0.11-1~jammy varnish-dev=6.0.11-1~jammy
 
 # install varnish-modules
-RUN apt-get install -y git automake autoconf libtool python3 make python-docutils jq && \
+RUN apt-get install -y git automake autoconf libtool python3 make docutils-common jq && \
     git clone -b 6.0-lts https://github.com/varnish/varnish-modules.git && \
     mkdir /aclocal && \
     cd /varnish-modules && \
@@ -37,7 +37,7 @@ RUN  cd /vmod-basicauth && \
     make install
 
 # cleanup
-RUN  apt-get remove -y curl gnupg2 git git varnish-dev automake autoconf libtool python3 make python-docutils jq && \
+RUN  apt-get remove -y curl gnupg2 git git varnish-dev automake autoconf libtool python3 make docutils-common jq && \
     apt-get autoremove -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /vmod-basicauth
