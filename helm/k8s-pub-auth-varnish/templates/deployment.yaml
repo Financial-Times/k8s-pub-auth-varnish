@@ -50,4 +50,7 @@ spec:
       volumes:
       - name: varnish-htpasswd
         secret:
-          secretName: pub-varnish-auth
+          secretName: global-secrets
+          items:
+            - key: VARNISH_HTPASSWD
+              path: VARNISH_HTPASSWD
