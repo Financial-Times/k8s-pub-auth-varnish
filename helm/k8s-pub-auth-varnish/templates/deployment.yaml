@@ -37,7 +37,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: global-secrets
-              key: smartlogic.varnish-api-key
+              key: SMARTLOGIC_VARNISH_API_KEY
         ports:
         - containerPort: 80
         livenessProbe:
