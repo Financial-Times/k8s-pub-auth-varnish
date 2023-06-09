@@ -36,7 +36,7 @@ spec:
         - name: SL_API_KEY
           valueFrom:
             secretKeyRef:
-              name: global-secrets
+              name: doppler-global-secret
               key: SMARTLOGIC_VARNISH_API_KEY
         ports:
         - containerPort: 80
@@ -50,7 +50,7 @@ spec:
       volumes:
       - name: varnish-htpasswd
         secret:
-          secretName: global-secrets
+          secretName: doppler-global-secret
           items:
             - key: VARNISH_HTPASSWD
               path: VARNISH_HTPASSWD
