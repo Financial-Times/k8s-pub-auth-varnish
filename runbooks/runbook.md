@@ -8,7 +8,7 @@ k8s-pub-auth-varnish
 
 ## Primary URL
 
-<https://upp-prod-publish-glb.upp.ft.com/>
+<https://github.com/Financial-Times/k8s-pub-auth-varnish>
 
 ## Service Tier
 
@@ -25,6 +25,8 @@ AWS
 ## Architecture
 
 Varnish is the entry point for Publishing clusters. Service is having few main functions - authentification/reverse proxy/cache/load-balancing for services in the Publishing clusters. This varnish instance is performing static routing primary, but for dynamic routing is referred to Path Routing Varnish service. In this service is also located DNS registration job for main URL of the cluster. After authentification this service will route the request to the needed service.
+
+[Content Publishing Diagram](https://lucid.app/lucidchart/5f4f1a8b-2d62-4fb3-a605-b54d52ba7ddb/edit?view_items=aWTftb-v~7_b&invitationId=inv_2d591f1a-d6df-4d98-8c33-3b74c4feaa37)
 
 ## Contains Personal Data
 
@@ -80,13 +82,13 @@ There are no keys for rotation.
 
 ## Monitoring
 
-- https://upp-prod-publish-us.upp.ft.com/__health
-- https://upp-prod-publish-eu.upp.ft.com/__health
+- <https://upp-prod-publish-us.upp.ft.com/__health>
+- <https://upp-prod-publish-eu.upp.ft.com/__health>
 
 ## First Line Troubleshooting
 
-https://github.com/Financial-Times/upp-docs/tree/master/guides/ops/first-line-troubleshooting
+<https://github.com/Financial-Times/upp-docs/tree/master/guides/ops/first-line-troubleshooting>
 
 ## Second Line Troubleshooting
 
-Please refer to the https://github.com/Financial-Times/k8s-pub-auth-varnish/blob/master/README.md
+Please refer to the <https://github.com/Financial-Times/k8s-pub-auth-varnish/blob/master/README.md>
