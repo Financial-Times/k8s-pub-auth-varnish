@@ -3,10 +3,22 @@
 # Declare variables to be passed into your templates.
 service:
   name: "" # The name of the service, should be defined in the specific app-configs folder.
-  certificateAwsArn: "" # The ARN of the aws certificate use by the ELB created for this service
+  certificateAwsArn: "" # The ARN of the aws certificate used by the ALB created for this service
   htpasswdSecret: "pub-varnish-auth" # The Kubernetes secret containing the contents of the .htpasswd file used for authentication.
+  external_dns_hostname: ""
+alb:
+  scheme: internet-facing
+  targetType: ip
+elb:
+  tags: ""
 replicaCount: 2
-
 image:
   repository: coco/k8s-pub-auth-varnish
   pullPolicy: IfNotPresent
+resources:
+ requests:
+   memory: 80Mi
+   cpu: 90m
+replicaCount: 2
+
+

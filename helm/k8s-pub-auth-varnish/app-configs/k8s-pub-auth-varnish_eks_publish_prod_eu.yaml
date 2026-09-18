@@ -3,6 +3,8 @@ service:
   name: auth-varnish
   certificateAwsArn: "arn:aws:acm:eu-west-1:469211898354:certificate/c9fc4ada-63ee-4951-b1ea-429ba586cbf7"
   external_dns_hostname: upp-prod-publish-eu.upp.ft.com
+  additionalHostnames:
+    - "upp-prod-publish-glb.upp.ft.com"
 
 elb:
   tags: "systemCode=upp,teamDL=universal.publishing.platform@ft.com,environment=p"
@@ -12,3 +14,6 @@ s3:
   prefix: "upp-prod-publish-eu/pub-auth-varnish"
   enabled: "true"
   interval: "5"
+
+ingress:
+  subnets: subnet-0428424ddabda6a91,subnet-0eee0c86fe72591d8,subnet-0accd8698c74349ce
